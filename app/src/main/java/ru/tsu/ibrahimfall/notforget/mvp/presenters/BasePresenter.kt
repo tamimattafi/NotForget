@@ -1,4 +1,4 @@
-package ru.tsu.ibrahimfall.notforget.mvp.presenter
+package ru.tsu.ibrahimfall.notforget.mvp.presenters
 
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
 

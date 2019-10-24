@@ -1,5 +1,7 @@
 package ru.tsu.ibrahimfall.notforget.mvp
 
+import retrofit2.Call
+
 
 interface MvpBaseContract {
 
@@ -7,7 +9,7 @@ interface MvpBaseContract {
         fun stopListening()
     }
 
-    interface RecyclerRepository<T> : Repository {
+    interface ListRepository<T> : Repository {
         fun getData(): Callback<ArrayList<T>>
     }
 

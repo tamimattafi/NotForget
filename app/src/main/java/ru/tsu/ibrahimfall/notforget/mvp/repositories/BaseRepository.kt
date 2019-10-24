@@ -1,7 +1,7 @@
-package ru.tsu.ibrahimfall.notforget.mvp.repository
+package ru.tsu.ibrahimfall.notforget.mvp.repositories
 
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
-import ru.tsu.ibrahimfall.notforget.mvp.callback.ActionCallback
+import ru.tsu.ibrahimfall.notforget.mvp.callbacks.ActionCallback
 
 
 abstract class BaseRepository : Repository {
@@ -17,8 +17,18 @@ abstract class BaseRepository : Repository {
 
     fun <T> createCallback(action: (callback: NotificationCallback<T>) -> Unit): Callback<T> =
         ActionCallback<T>().apply {
+
             setAction(action)
             callbacks.add(this)
+
+            addSuccessListener {
+                callbacks.remove(this)
+            }
+
+            addFailureListener {
+                callbacks.remove(this)
+            }
+
         }
 
 }

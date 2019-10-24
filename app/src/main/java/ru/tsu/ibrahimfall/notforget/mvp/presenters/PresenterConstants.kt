@@ -1,4 +1,4 @@
-package ru.tsu.ibrahimfall.notforget.mvp.presenter
+package ru.tsu.ibrahimfall.notforget.mvp.presenters
 
 object PresenterConstants {
     const val LOAD_DATA_ERROR = "Data is already loading."

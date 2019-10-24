@@ -1,4 +1,4 @@
-package ru.tsu.ibrahimfall.notforget.mvp.callback
+package ru.tsu.ibrahimfall.notforget.mvp.callbacks
 
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*

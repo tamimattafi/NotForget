@@ -1,9 +1,9 @@
-package ru.tsu.ibrahimfall.notforget.mvp.presenter
+package ru.tsu.ibrahimfall.notforget.mvp.presenters
 
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
 
-abstract class RecyclerPresenter<T, H : Holder, V : ListenerView<H>, R : RecyclerRepository<T>>(
+abstract class RecyclerPresenter<T, H : Holder, V : ListenerView<H>, R : ListRepository<T>>(
     view: V,
     repository: R
 ) : BasePresenter<V, R>(view, repository), MvpBaseContract.RecyclerPresenter<H> {

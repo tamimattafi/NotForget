@@ -1,4 +1,4 @@
-package ru.tsu.ibrahimfall.notforget.mvp.adapter
+package ru.tsu.ibrahimfall.notforget.mvp.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

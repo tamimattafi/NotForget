@@ -1,4 +1,4 @@
-package ru.tsu.ibrahimfall.notforget.model
+package ru.tsu.ibrahimfall.notforget.model.items
 
 data class Task(
     val id: Int? = null,
