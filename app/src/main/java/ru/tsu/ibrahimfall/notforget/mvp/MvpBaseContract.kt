@@ -1,6 +1,5 @@
 package ru.tsu.ibrahimfall.notforget.mvp
 
-import retrofit2.Call
 
 
 interface MvpBaseContract {
@@ -60,5 +59,6 @@ interface MvpBaseContract {
 
     interface AdapterListener {
         fun onHolderClick(listPosition: Int)
+        fun onHolderAction(listPosition: Int, action: Int)
     }
 }

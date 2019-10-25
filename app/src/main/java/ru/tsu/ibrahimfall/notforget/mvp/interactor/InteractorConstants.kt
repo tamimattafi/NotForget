@@ -1,8 +1,10 @@
-package ru.tsu.ibrahimfall.notforget.mvp.interractor
+package ru.tsu.ibrahimfall.notforget.mvp.interactor
 
-import java.lang.IllegalArgumentException
+object InteractorConstants {
 
-object InterractorConstants {
+
+    const val HEADER_AUTH = "Authorization"
+    const val HEADER_AUTH_BARER = "Bearer"
 
     fun getCodeMessage(code: Int): String = "$code " + when (code) {
         CODE_OK -> MESSAGE_OK

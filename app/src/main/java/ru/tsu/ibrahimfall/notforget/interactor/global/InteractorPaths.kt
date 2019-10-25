@@ -1,6 +1,6 @@
-package ru.tsu.ibrahimfall.notforget.interractor.global
+package ru.tsu.ibrahimfall.notforget.interactor.global
 
-object ApiPaths {
+object InteractorPaths {
 
     const val BASE_LINK = "http://practice.mobile.kreosoft.ru/api/"
 

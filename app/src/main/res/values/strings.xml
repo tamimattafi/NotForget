@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Not Forget</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="something_went_wrong">Something went wrong!</string>
 </resources>

@@ -3,8 +3,9 @@ package ru.tsu.ibrahimfall.notforget.mvp.repositories
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
-import ru.tsu.ibrahimfall.notforget.mvp.interractor.InterractorConstants
+import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.Callback
+import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.NotificationCallback
+import ru.tsu.ibrahimfall.notforget.mvp.interactor.InteractorConstants
 
 abstract class BaseApiRepository : BaseRepository() {
 
@@ -64,9 +65,9 @@ abstract class BaseApiRepository : BaseRepository() {
     }
 
     protected fun isCodeOk(notification: NotificationCallback<*>, code: Int): Boolean =
-        if (code == InterractorConstants.CODE_OK) true
+        if (code == InteractorConstants.CODE_OK) true
         else {
-            notification.notifyFailure(InterractorConstants.getCodeMessage(code))
+            notification.notifyFailure(InteractorConstants.getCodeMessage(code))
             false
         }
 

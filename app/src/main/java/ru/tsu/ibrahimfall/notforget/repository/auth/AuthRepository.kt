@@ -1,17 +1,17 @@
 package ru.tsu.ibrahimfall.notforget.repository.auth
 
-import ru.tsu.ibrahimfall.notforget.interractor.AuthInterractor
+import ru.tsu.ibrahimfall.notforget.interactor.auth.AuthInteractor
 import ru.tsu.ibrahimfall.notforget.model.auth.LoginCredentials
-import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
+import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.Callback
 import ru.tsu.ibrahimfall.notforget.mvp.repositories.BaseApiRepository
 
-class LoginRepository(
-    private val interractor: AuthInterractor,
+class AuthRepository(
+    private val interactor: AuthInteractor,
     private val preferences: AuthRepositoryContract.Preferences
 ) : BaseApiRepository(), AuthRepositoryContract.Repository {
 
     override fun login(credentials: LoginCredentials): Callback<Boolean> =
-        handleCustomCall(interractor.login(credentials)) { notification, token ->
+        handleCustomCall(interactor.login(credentials)) { notification, token ->
 
             preferences.apply {
                 setToken(token)

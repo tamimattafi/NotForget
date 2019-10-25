@@ -2,9 +2,8 @@ package ru.tsu.ibrahimfall.notforget.mvp.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import java.lang.IllegalArgumentException
+import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
 
 abstract class RecyclerAdapter<H : Holder>(private val view: ListenerView<H>) :
     RecyclerView.Adapter<ViewHolder>(), Adapter {
@@ -33,11 +32,16 @@ abstract class RecyclerAdapter<H : Holder>(private val view: ListenerView<H>) :
 
     @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder as? H)?.apply {
+
+        (holder as? Holder)?.apply {
             listener = view
             listPosition = position
-            view.bindHolder(this)
         }
+
+        (holder as? H)?.let {
+            view.bindHolder(it)
+        }
+
     }
 
     override fun getItemViewType(position: Int): Int = when {
