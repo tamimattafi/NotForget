@@ -2,7 +2,7 @@ package ru.tsu.ibrahimfall.notforget.interactor.global
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.tsu.ibrahimfall.notforget.interactor.global.client.AuthHttpClieant
+import ru.tsu.ibrahimfall.notforget.interactor.global.client.AuthHttpClient
 import ru.tsu.ibrahimfall.notforget.interactor.global.client.AuthInterceptor
 
 object InteractorBuilder {
@@ -15,7 +15,7 @@ object InteractorBuilder {
 
     fun <T> createAuthInteractor(authInterceptor: AuthInterceptor, clazz: Class<T>): T =
         getBaseBuilder()
-            .client(AuthHttpClieant.getInstance(authInterceptor))
+            .client(AuthHttpClient.getInstance(authInterceptor))
             .build()
             .create(clazz)
 }

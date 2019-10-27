@@ -11,7 +11,7 @@ class AuthRepository(
 ) : BaseApiRepository(), AuthRepositoryContract.Repository {
 
     override fun login(credentials: LoginCredentials): Callback<Boolean> =
-        handleCustomCall(interactor.login(credentials)) { notification, token ->
+        handleCustomBodyCall(interactor.login(credentials)) { notification, token ->
 
             preferences.apply {
                 setToken(token)

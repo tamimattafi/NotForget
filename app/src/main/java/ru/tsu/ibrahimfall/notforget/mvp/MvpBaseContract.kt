@@ -15,6 +15,7 @@ interface MvpBaseContract {
     interface Callback<T> {
         fun addSuccessListener(onSuccess: (data: T) -> Unit): Callback<T>
         fun addFailureListener(onFailure: (message: String) -> Unit): Callback<T>
+        fun addCompleteListener(onComplete: () -> Unit): Callback<T>
         fun start()
         fun cancel()
     }
@@ -26,6 +27,7 @@ interface MvpBaseContract {
     interface NotificationCallback<T> {
         fun notifySuccess(data: T)
         fun notifyFailure(message: String)
+        fun notifyComplete()
     }
 
     interface Presenter {

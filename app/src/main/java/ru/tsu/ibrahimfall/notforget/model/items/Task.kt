@@ -5,5 +5,8 @@ data class Task(
     val title: String? = null,
     val description: String? = null,
     val done: Int = 0,
-    val deadline: Int = 0
+    val deadline: Int = 0,
+    val category: Category? = null,
+    val priority: Priority? = null,
+    val created: Int = 0
 )

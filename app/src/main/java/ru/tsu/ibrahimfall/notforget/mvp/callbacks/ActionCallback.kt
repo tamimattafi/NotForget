@@ -1,44 +1,61 @@
 package ru.tsu.ibrahimfall.notforget.mvp.callbacks
 
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract
-import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.*
+import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.Callback
 
-open class ActionCallback<T> : MvpBaseContract.ActionCallback<T> {
+class ActionCallback<T> : MvpBaseContract.ActionCallback<T> {
 
-    protected var onSuccessListeners: ArrayList<(data: T) -> Unit> = ArrayList()
-    protected var onFailureListeners: ArrayList<(message: String) -> Unit> = ArrayList()
+    private var onSuccess: ArrayList<(data: T) -> Unit> = ArrayList()
+    private var onFailure: ArrayList<(message: String) -> Unit> = ArrayList()
+    private var onComplete: ArrayList<() -> Unit> = ArrayList()
 
     private var action: ((callback: MvpBaseContract.ActionCallback<T>) -> Unit)? = null
 
     override fun addSuccessListener(onSuccess: (data: T) -> Unit): Callback<T> =
-        this.also { it.onSuccessListeners.add(onSuccess) }
+        this.also { it.onSuccess.add(onSuccess) }
 
     override fun addFailureListener(onFailure: (message: String) -> Unit): Callback<T> =
-        this.also { it.onFailureListeners.add(onFailure) }
+        this.also { it.onFailure.add(onFailure) }
+
+    override fun addCompleteListener(onComplete: () -> Unit): Callback<T> =
+        this.also { it.onComplete.add(onComplete) }
 
     override fun setAction(action: (callback: MvpBaseContract.ActionCallback<T>) -> Unit): Callback<T> =
         this.also { it.action = action }
 
     override fun start() {
         action?.invoke(this)
-            ?: onFailureListeners.forEach { it.invoke(CallbackConstants.ACTION_ERROR) }
+            ?: onFailure.forEach { it.invoke(CallbackConstants.ACTION_ERROR) }
     }
 
     override fun notifySuccess(data: T) {
-        this.onSuccessListeners.forEach {
+        onSuccess.forEach {
             it.invoke(data)
         }
+
+        notifyComplete()
     }
 
     override fun notifyFailure(message: String) {
-        this.onFailureListeners.forEach {
+        onFailure.forEach {
             it.invoke(message)
         }
+
+        notifyComplete()
+    }
+
+    override fun notifyComplete() {
+        onComplete.forEach {
+            it.invoke()
+        }
+
+        cancel()
     }
 
     override fun cancel() {
-        onFailureListeners.clear()
-        onSuccessListeners.clear()
+        onComplete.clear()
+        onFailure.clear()
+        onSuccess.clear()
         action = null
     }
 

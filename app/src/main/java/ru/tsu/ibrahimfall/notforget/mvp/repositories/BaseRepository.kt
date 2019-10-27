@@ -21,14 +21,9 @@ abstract class BaseRepository : Repository {
             setAction(action)
             callbacks.add(this)
 
-            addSuccessListener {
+            addCompleteListener {
                 callbacks.remove(this)
             }
-
-            addFailureListener {
-                callbacks.remove(this)
-            }
-
         }
 
 }

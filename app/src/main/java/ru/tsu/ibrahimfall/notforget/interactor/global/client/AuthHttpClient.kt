@@ -3,7 +3,7 @@ package ru.tsu.ibrahimfall.notforget.interactor.global.client
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-object AuthHttpClieant {
+object AuthHttpClient {
 
     const val TIMEOUT_READ = 40L
     const val TIMEOUT_WRITE = 40L
