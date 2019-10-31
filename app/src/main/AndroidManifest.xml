@@ -18,7 +18,9 @@
         android:theme="@style/SplashTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".app.MainActivity">
+        <activity
+            android:configChanges="orientation|keyboardHidden"
+            android:name=".app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

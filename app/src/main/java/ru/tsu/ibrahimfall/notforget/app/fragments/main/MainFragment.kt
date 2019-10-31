@@ -6,12 +6,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_main.*
 import ru.tsu.ibrahimfall.notforget.R
+import ru.tsu.ibrahimfall.notforget.app.Application
+import ru.tsu.ibrahimfall.notforget.app.custom.dialogs.ConfirmationDialog
 import ru.tsu.ibrahimfall.notforget.app.fragments.global.Actions
+import ru.tsu.ibrahimfall.notforget.app.fragments.login.LoginFragment
 import ru.tsu.ibrahimfall.notforget.app.fragments.main.MainContract.*
 import ru.tsu.ibrahimfall.notforget.app.fragments.main.creation.CreationFragment
+import ru.tsu.ibrahimfall.notforget.app.fragments.main.details.DetailsFragment
+import ru.tsu.ibrahimfall.notforget.interactor.auth.AuthInteractor
 import ru.tsu.ibrahimfall.notforget.interactor.tasks.TasksInteractor
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract
 import ru.tsu.ibrahimfall.notforget.mvp.navigation.fragment.NavigationFragment
+import ru.tsu.ibrahimfall.notforget.repository.auth.AuthRepository
 import ru.tsu.ibrahimfall.notforget.repository.tasks.TasksRepository
 import ru.tsu.ibrahimfall.notforget.utils.AppUtils.showSnackBar
 
@@ -23,13 +29,24 @@ class MainFragment : NavigationFragment(), View {
     override var layoutId: Int = R.layout.fragment_main
     override var name: String = "fragment-name"
 
+    private val logoutDialog by lazy {
+        ConfirmationDialog(activity!!).apply {
+            title = context!!.resources.getString(R.string.logout_confirmation_title)
+        }.setConfirmationListener {
+            presenter.logout()
+        }
+    }
+
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = MainPresenter(
-            this,
-            TasksRepository(TasksInteractor.getInstance())
-        )
+
+        MainRepositoryManager(
+
+            TasksRepository(TasksInteractor.getInstance()),
+            AuthRepository(AuthInteractor.getInstance(), Application.getAuthPreferences())
+
+        ).also { presenter = MainPresenter(this, it) }
 
         adapter = MainAdapter(this)
 
@@ -50,6 +67,10 @@ class MainFragment : NavigationFragment(), View {
             presenter.refresh()
             refresh.isRefreshing = false
         }
+
+        logout.setOnClickListener {
+            logoutDialog.show()
+        }
     }
 
     override fun showMessage(message: String) {
@@ -63,13 +84,17 @@ class MainFragment : NavigationFragment(), View {
     override fun getAdapter(): MvpBaseContract.Adapter = adapter
 
     override fun onHolderClick(holder: Holder) {
-
+        presenter.onItemClick(holder)
     }
 
     override fun onHolderAction(holder: Holder?, action: Int) {
         if (action == Actions.ACTION_TOGGLE) {
             presenter.toggleItem(holder)
         }
+    }
+
+    override fun openTaskDetails(taskId: Int) {
+        navigationManager.attachFragment(DetailsFragment(taskId))
     }
 
 
@@ -80,5 +105,13 @@ class MainFragment : NavigationFragment(), View {
         }
     }
 
+    override fun onLogout() {
+        navigationManager.attachBaseFragment(LoginFragment())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.onDestroyView()
+    }
 
 }

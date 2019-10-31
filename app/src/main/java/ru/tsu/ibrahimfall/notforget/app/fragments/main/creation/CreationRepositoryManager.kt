@@ -8,7 +8,7 @@ import ru.tsu.ibrahimfall.notforget.repository.categories.CategoryRepositoryCont
 import ru.tsu.ibrahimfall.notforget.repository.priorities.PrioritiesRepositoryContract
 import ru.tsu.ibrahimfall.notforget.repository.tasks.TasksRepositoryContract
 
-class CreationRepository(
+class CreationRepositoryManager(
     private val taskRepository: TasksRepositoryContract.Repository,
     private val categoryRepository: CategoryRepositoryContract.Repository,
     private val priorityRepository: PrioritiesRepositoryContract.Repository

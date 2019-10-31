@@ -17,4 +17,8 @@
     <string name="cancel">CANCEL</string>
     <string name="yes">YES!</string>
     <string name="confirmation_dialog">Confirmation Dialog</string>
+    <string name="item_saved_succesfully">Item was successfully saved!</string>
+    <string name="done">Done</string>
+    <string name="not_done">Not done</string>
+    <string name="logout_confirmation_title">Do you really want to logout?</string>
 </resources>

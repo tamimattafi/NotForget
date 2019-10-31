@@ -19,6 +19,7 @@ import ru.tsu.ibrahimfall.notforget.repository.categories.CategoriesRepository
 import ru.tsu.ibrahimfall.notforget.repository.priorities.PrioritiesRepository
 import ru.tsu.ibrahimfall.notforget.repository.tasks.TasksRepository
 import ru.tsu.ibrahimfall.notforget.utils.AppUtils.showSnackBar
+import ru.tsu.ibrahimfall.notforget.utils.AppUtils.showToast
 
 class CreationFragment : NavigationFragment(), View {
 
@@ -45,7 +46,7 @@ class CreationFragment : NavigationFragment(), View {
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CreationRepository(
+        CreationRepositoryManager(
 
             TasksRepository(TasksInteractor.getInstance()),
             CategoriesRepository(CategoriesInteractor.getInstance()),
@@ -68,6 +69,7 @@ class CreationFragment : NavigationFragment(), View {
 
     override fun onTaskCreated() {
         MainValues.shouldRefresh = true
+        activity!!.showToast(activity!!.resources.getString(R.string.item_saved_succesfully))
         navigationManager.requestBackPress()
     }
 
@@ -144,8 +146,10 @@ class CreationFragment : NavigationFragment(), View {
 
         })
 
-    private fun hideConfirmation() {
-        confirmationDialog.dismiss()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.onDestroyView()
     }
 
 }

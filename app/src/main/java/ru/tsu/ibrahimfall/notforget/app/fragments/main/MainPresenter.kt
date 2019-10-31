@@ -2,13 +2,13 @@ package ru.tsu.ibrahimfall.notforget.app.fragments.main
 
 import android.graphics.Color
 import ru.tsu.ibrahimfall.notforget.app.fragments.main.MainContract.*
-import ru.tsu.ibrahimfall.notforget.app.fragments.main.MainValues.DEFAULT_CATEGORY_NAME
-import ru.tsu.ibrahimfall.notforget.app.fragments.main.MainValues.DEFAULT_DESCRIPTION
-import ru.tsu.ibrahimfall.notforget.app.fragments.main.MainValues.DEFAULT_PRIORITY_COLOR
-import ru.tsu.ibrahimfall.notforget.app.fragments.main.MainValues.DEFAULT_TITLE
 import ru.tsu.ibrahimfall.notforget.model.items.task.Task
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task.Companion.DEFAULT_CATEGORY_NAME
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task.Companion.DEFAULT_DESCRIPTION
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task.Companion.DEFAULT_PRIORITY_COLOR
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task.Companion.DEFAULT_TITLE
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task.Companion.TASK_EDIT_SUCCESS_MESSAGE
 import ru.tsu.ibrahimfall.notforget.mvp.presenters.RecyclerPresenter
-import ru.tsu.ibrahimfall.notforget.repository.tasks.TasksRepositoryContract.Repository
 
 
 class MainPresenter(view: View, repository: Repository) :
@@ -20,14 +20,14 @@ class MainPresenter(view: View, repository: Repository) :
 
                 setTitle(title ?: DEFAULT_TITLE)
                 setDescription(description ?: DEFAULT_DESCRIPTION)
-                setChecked(isDone())
+                this@with.setIsDone(isDone())
                 setImportanceColor(Color.parseColor(priority?.color ?: DEFAULT_PRIORITY_COLOR))
 
                 (category?.name ?: DEFAULT_CATEGORY_NAME).apply {
                     if (listPosition > 0) {
-                        if (data[listPosition - 1].category?.id != category?.id) showHeader(this)
-                        else hideHeader()
-                    } else showHeader(this)
+                        if (data[listPosition - 1].category?.id != category?.id) setCategory(this)
+                        else hideCategory()
+                    } else setCategory(this)
                 }
 
             }
@@ -43,14 +43,26 @@ class MainPresenter(view: View, repository: Repository) :
             with(data[listPosition]) {
                 toggleDone()
                 repository.edit(this).addSuccessListener {
-                    view.showMessage(MainValues.TASK_EDIT_SUCCESS_MESSAGE)
+                    view.showMessage(TASK_EDIT_SUCCESS_MESSAGE)
                 }.addFailureListener {
                     toggleDone()
-                    setChecked(isDone())
+                    this@apply.setIsDone(isDone())
                     view.showMessage(it)
                 }.start()
             }
         }
+    }
+
+    override fun onItemClick(holder: Holder) {
+        view.openTaskDetails(data[holder.listPosition].id)
+    }
+
+    override fun logout() {
+        repository.logout().addSuccessListener {
+            view.onLogout()
+        }.addFailureListener {
+            view.showMessage(it)
+        }.start()
     }
 
 

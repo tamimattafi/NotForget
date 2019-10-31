@@ -21,10 +21,10 @@ class TaskViewHolder(itemView: View) : RecyclerHolder(itemView), Holder {
         itemView.root.setBackgroundColor(color)
     }
 
-    override fun setChecked(checked: Boolean) {
+    override fun setIsDone(isDone: Boolean) {
         with(itemView.check) {
             setOnCheckedChangeListener(null)
-            isChecked = checked
+            isChecked = isDone
 
             setOnCheckedChangeListener { _, _ ->
                 onAction?.invoke(Actions.ACTION_TOGGLE)
@@ -32,14 +32,14 @@ class TaskViewHolder(itemView: View) : RecyclerHolder(itemView), Holder {
         }
     }
 
-    override fun showHeader(header: String) {
+    override fun setCategory(category: String) {
         with(itemView.header) {
-            text = header
+            text = category
             visibility = Visibility.VISIBLE
         }
     }
 
-    override fun hideHeader() {
+    override fun hideCategory() {
         itemView.header.visibility = Visibility.GONE
     }
 

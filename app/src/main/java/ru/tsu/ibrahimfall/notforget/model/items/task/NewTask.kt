@@ -7,7 +7,7 @@ data class NewTask(
     var title: String? = null,
     var description: String? = null,
     var done: Int = 0,
-    val deadline: Int = 0,
+    val deadline: Long = 0,
     @SerializedName(CATEGORY_SERIALIZATION)
     var category: Int? = null,
     @SerializedName(PRIORITY_SERIALIZATION)

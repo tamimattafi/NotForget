@@ -5,14 +5,21 @@ import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract
 
 interface HoldersContract {
 
+    interface TaskHolder : MvpBaseContract.Holder, TaskDetails {
+        fun hideCategory()
+    }
 
-    interface TaskHolder : MvpBaseContract.Holder {
+    interface TaskDetails {
         fun setTitle(title: String)
         fun setDescription(description: String)
         fun setImportanceColor(@ColorInt color: Int)
-        fun setChecked(checked: Boolean)
-        fun showHeader(header: String)
-        fun hideHeader()
+        fun setIsDone(isDone: Boolean)
+        fun setCategory(category: String)
+    }
+
+    interface TaskMoreDetails {
+        fun setCreationDate(date: String)
+        fun setPriority(priority: String)
     }
 
     interface TextHolder : MvpBaseContract.Holder {

@@ -24,7 +24,7 @@ interface CreationContract {
     }
 
 
-    interface Presenter {
+    interface Presenter : MvpBaseContract.Presenter {
         fun loadTaskSections()
         fun createTask()
         fun onCategorySelected(position: Int)
