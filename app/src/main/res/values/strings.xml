@@ -1,8 +1,20 @@
 <resources>
-    <string name="app_name">Not Forget</string>
+    <string name="app_name">Not Forget!</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
     <string name="something_went_wrong">Something went wrong!</string>
+    <string name="placeholder">placeholder</string>
+    <string name="no_tasks_to_show">There are no tasks to show.</string>
+    <string name="create_a_note">Create a note</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="category">Category</string>
+    <string name="priority">Priority</string>
+    <string name="save">Save</string>
+    <string name="save_it">Save it?</string>
+    <string name="cancel">CANCEL</string>
+    <string name="yes">YES!</string>
+    <string name="confirmation_dialog">Confirmation Dialog</string>
 </resources>

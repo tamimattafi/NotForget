@@ -1,6 +1,5 @@
 package ru.tsu.ibrahimfall.notforget.interactor.categories
 
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,7 +16,7 @@ interface CategoriesInteractor {
     fun getAll(): Call<ArrayList<Category>>
 
     @POST(PATH_CATEGORIES)
-    fun post(@Body category: Category): Call<ResponseBody>
+    fun post(@Body category: Category): Call<Void>
 
     companion object {
 

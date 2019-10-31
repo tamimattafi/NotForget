@@ -1,14 +1,15 @@
 package ru.tsu.ibrahimfall.notforget.repository.tasks
 
 import ru.tsu.ibrahimfall.notforget.interactor.tasks.TasksInteractor
-import ru.tsu.ibrahimfall.notforget.model.items.Task
+import ru.tsu.ibrahimfall.notforget.model.items.task.NewTask
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.Callback
 import ru.tsu.ibrahimfall.notforget.mvp.repositories.BaseApiRepository
 
 class TasksRepository(private val interactor: TasksInteractor) : BaseApiRepository(),
     TasksRepositoryContract.Repository {
 
-    override fun post(task: Task): Callback<Boolean> = handleActionCall(interactor.post(task))
+    override fun post(task: NewTask): Callback<Boolean> = handleActionCall(interactor.post(task))
 
     override fun get(id: Int): Callback<Task> = handleBodyCall(interactor.get(id))
 

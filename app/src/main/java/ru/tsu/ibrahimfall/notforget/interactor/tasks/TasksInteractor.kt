@@ -1,6 +1,5 @@
 package ru.tsu.ibrahimfall.notforget.interactor.tasks
 
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 import ru.tsu.ibrahimfall.notforget.interactor.global.InteractorBuilder
@@ -8,7 +7,8 @@ import ru.tsu.ibrahimfall.notforget.interactor.global.InteractorPaths.PATH_ID
 import ru.tsu.ibrahimfall.notforget.interactor.global.InteractorPaths.PATH_TASKS
 import ru.tsu.ibrahimfall.notforget.interactor.global.InteractorPaths.PATH_TASKS_ID
 import ru.tsu.ibrahimfall.notforget.interactor.global.client.AuthInterceptor
-import ru.tsu.ibrahimfall.notforget.model.items.Task
+import ru.tsu.ibrahimfall.notforget.model.items.task.NewTask
+import ru.tsu.ibrahimfall.notforget.model.items.task.Task
 
 interface TasksInteractor {
 
@@ -16,16 +16,16 @@ interface TasksInteractor {
     fun getAll(): Call<ArrayList<Task>>
 
     @POST(PATH_TASKS)
-    fun post(@Body task: Task): Call<ResponseBody>
+    fun post(@Body task: NewTask): Call<Void>
 
     @PATCH(PATH_TASKS_ID)
     fun get(@Path(PATH_ID) id: Int): Call<Task>
 
     @PATCH(PATH_TASKS_ID)
-    fun edit(@Path(PATH_ID) id: Int, @Body task: Task): Call<ResponseBody>
+    fun edit(@Path(PATH_ID) id: Int, @Body task: Task): Call<Void>
 
     @DELETE(PATH_TASKS_ID)
-    fun delete(@Path(PATH_ID) id: Int): Call<ResponseBody>
+    fun delete(@Path(PATH_ID) id: Int): Call<Void>
 
 
     companion object {

@@ -1,6 +1,5 @@
 package ru.tsu.ibrahimfall.notforget.mvp.repositories
 
-import okhttp3.ResponseBody
 import retrofit2.Call
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.Callback
 import ru.tsu.ibrahimfall.notforget.mvp.MvpBaseContract.NotificationCallback
@@ -10,7 +9,7 @@ open class BaseApiRepository : BaseRepository() {
 
     private val calls: ArrayList<Pair<ApiCallback<*, *>, Call<*>>> = ArrayList()
 
-    fun handleActionCall(call: Call<ResponseBody>): Callback<Boolean> =
+    fun handleActionCall(call: Call<Void>): Callback<Boolean> =
         createCallback { notification ->
             call.handleCallback(notification) {
                 notification.notifySuccess(true)

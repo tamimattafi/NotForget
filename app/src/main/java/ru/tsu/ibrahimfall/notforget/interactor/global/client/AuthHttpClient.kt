@@ -7,6 +7,7 @@ object AuthHttpClient {
 
     const val TIMEOUT_READ = 40L
     const val TIMEOUT_WRITE = 40L
+    val UNIT = TimeUnit.SECONDS
 
     private var instance: OkHttpClient? = null
 
@@ -16,8 +17,8 @@ object AuthHttpClient {
     private fun createInstance(authInterceptor: AuthInterceptor): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
-            .writeTimeout(TIMEOUT_WRITE, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT_READ, UNIT)
+            .writeTimeout(TIMEOUT_WRITE, UNIT)
             .build()
 
 }

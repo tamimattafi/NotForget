@@ -21,8 +21,8 @@ import ru.tsu.ibrahimfall.notforget.R
 
 object AppUtils {
 
-    fun convertDpToPixel(context: Context, dp: Float): Float {
-        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    fun Context.convertDpToPixel(dp: Float): Float {
+        return dp * (resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
     fun getDrawable(context: Context, drawableId: Int): Drawable? {

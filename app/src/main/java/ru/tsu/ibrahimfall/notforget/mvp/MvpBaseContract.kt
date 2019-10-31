@@ -42,14 +42,15 @@ interface MvpBaseContract {
 
     interface Holder {
         var listPosition: Int
-        var listener: AdapterListener?
+        fun setHolderClickListener(onClick: () -> Unit): Holder
+        fun setHolderActionListener(onAction: (action: Int) -> Unit): Holder
     }
 
     interface View {
         fun showMessage(message: String)
     }
 
-    interface ListenerView<HOLDER : Holder> : View, AdapterListener {
+    interface ListenerView<HOLDER : Holder> : View, AdapterListener<HOLDER> {
         fun bindHolder(holder: HOLDER)
         fun getAdapter(): Adapter
     }
@@ -59,8 +60,8 @@ interface MvpBaseContract {
         fun setDataCount(dataCount: Int)
     }
 
-    interface AdapterListener {
-        fun onHolderClick(listPosition: Int)
-        fun onHolderAction(listPosition: Int, action: Int)
+    interface AdapterListener<HOLDER : Holder> {
+        fun onHolderClick(holder: HOLDER)
+        fun onHolderAction(holder: HOLDER?, action: Int)
     }
 }

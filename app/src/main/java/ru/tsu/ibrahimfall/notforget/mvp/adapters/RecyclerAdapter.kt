@@ -9,11 +9,16 @@ abstract class RecyclerAdapter<H : Holder>(private val view: ListenerView<H>) :
     RecyclerView.Adapter<ViewHolder>(), Adapter {
 
     override var isLoading: Boolean = false
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     private var dataCount: Int = 0
 
-    abstract fun getEmptyHolder(): ViewHolder
-    abstract fun getItemHolder(): ViewHolder
-    abstract fun getLoadingHolder(): ViewHolder
+    abstract fun getEmptyHolder(parent: ViewGroup): ViewHolder
+    abstract fun getItemHolder(parent: ViewGroup): ViewHolder
+    abstract fun getLoadingHolder(parent: ViewGroup): ViewHolder
 
     override fun setDataCount(dataCount: Int) {
         this.dataCount = dataCount
@@ -22,9 +27,9 @@ abstract class RecyclerAdapter<H : Holder>(private val view: ListenerView<H>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
-            TYPE_LOADING -> getLoadingHolder()
-            TYPE_ITEM -> getItemHolder()
-            TYPE_EMPTY -> getEmptyHolder()
+            TYPE_LOADING -> getLoadingHolder(parent)
+            TYPE_ITEM -> getItemHolder(parent)
+            TYPE_EMPTY -> getEmptyHolder(parent)
             else -> throw IllegalArgumentException("${AdapterConstants.VIEW_TYPE_ERROR}: $viewType")
         }
 
@@ -34,14 +39,26 @@ abstract class RecyclerAdapter<H : Holder>(private val view: ListenerView<H>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         (holder as? Holder)?.apply {
-            listener = view
             listPosition = position
+
+            setHolderActionListener { action ->
+                view.onHolderAction(null, action)
+            }
+
         }
 
-        (holder as? H)?.let {
-            view.bindHolder(it)
-        }
+        prepareMainHolder(holder as? H ?: return)
+    }
 
+    private fun prepareMainHolder(holder: H) {
+        with(view) {
+            holder.setHolderClickListener {
+                onHolderClick(holder)
+            }.setHolderActionListener { action ->
+                onHolderAction(holder, action)
+            }
+            bindHolder(holder)
+        }
     }
 
     override fun getItemViewType(position: Int): Int = when {

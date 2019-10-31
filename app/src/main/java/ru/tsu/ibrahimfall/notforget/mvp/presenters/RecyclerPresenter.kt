@@ -8,16 +8,14 @@ abstract class RecyclerPresenter<T, H : Holder, V : ListenerView<H>, R : ListRep
     repository: R
 ) : BasePresenter<V, R>(view, repository), MvpBaseContract.RecyclerPresenter<H> {
 
-    private val data: ArrayList<T> = ArrayList()
+    protected val data: ArrayList<T> = ArrayList()
 
     override fun loadData() {
         view.apply {
 
             if (!getAdapter().isLoading) {
                 loadRepositoryData()
-            } else {
-                showMessage(PresenterConstants.LOAD_DATA_ERROR)
-            }
+            } else showMessage(PresenterConstants.LOAD_DATA_ERROR)
 
         }
     }
@@ -33,6 +31,8 @@ abstract class RecyclerPresenter<T, H : Holder, V : ListenerView<H>, R : ListRep
             handleData(data)
         }.addFailureListener { message ->
             handleError(message)
+        }.addCompleteListener {
+            view.getAdapter().isLoading = false
         }.start()
 
     }
@@ -57,14 +57,10 @@ abstract class RecyclerPresenter<T, H : Holder, V : ListenerView<H>, R : ListRep
 
     override fun refresh() {
         view.apply {
-
             if (!getAdapter().isLoading) {
                 data.clear()
                 loadRepositoryData()
-            } else {
-                showMessage(PresenterConstants.REFRESH_ERROR)
-            }
-
+            } else showMessage(PresenterConstants.REFRESH_ERROR)
         }
     }
 

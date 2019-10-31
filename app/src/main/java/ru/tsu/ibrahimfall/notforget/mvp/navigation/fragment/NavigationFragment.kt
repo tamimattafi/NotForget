@@ -11,4 +11,5 @@ abstract class NavigationFragment : BaseFragment(), Fragment {
         this.navigationManager = navigationManager
     }
 
+
 }
